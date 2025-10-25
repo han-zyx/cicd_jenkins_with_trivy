@@ -1,6 +1,6 @@
 pipeline {
 	agent any
-	tools{
+	tools {
 		nodejs 'NodeJS'
 	}
 	stages {
@@ -11,6 +11,7 @@ pipeline {
 		}
 		stage('Unit Test'){
 			steps{
+				sh 'sudo apt-get update && sudo apt-get install -y libatomic1'
 				sh 'npm test'
 				sh 'npm install'
 			}
