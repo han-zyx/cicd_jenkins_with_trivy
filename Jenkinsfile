@@ -24,7 +24,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'cicd_with_trivy', variable: 'SONAR_TOKEN')]) {
 					withSonarQubeEnv('SonarQube') {
 						sh """
-						${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+						${SONAR_SCANNER_HOME}/opt/sonar-scanner/bin/sonar-scanner \
 						-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
 						-Dsonar.sources=. \
 						-Dsonar.host.url=http://13.233.119.82:9000 \
