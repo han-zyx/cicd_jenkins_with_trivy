@@ -5,7 +5,6 @@ pipeline {
     }
 	environment {
 		SONAR_PROJECT_KEY = 'cicd_with_trivy'
-		SONAR_SCANNER_HOME = 'SonarQubeScanner'
 	}
     stages {
         stage('Github') {
@@ -23,13 +22,16 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'cicd_with_trivy', variable: 'SONAR_TOKEN')]) {
 					withSonarQubeEnv('SonarQube') {
-						sh """
-						${SONAR_SCANNER_HOME}/opt/sonar-scanner/bin/sonar-scanner \
-						-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-						-Dsonar.sources=. \
-						-Dsonar.host.url=http://13.233.119.82:9000 \
-						-Dsonar.login=${SONAR_TOKEN}
-						"""
+						 script {
+                            def scannerHome = tool 'SonarQubeScanner'
+                            sh """
+                                ${scannerHome}/bin/sonar-scanner \
+                                -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=http://13.233.119.82:9000 \
+                                -Dsonar.login=${SONAR_TOKEN}
+                            """
+                        }
 					}
                 }
             }
