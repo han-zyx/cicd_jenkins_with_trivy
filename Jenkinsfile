@@ -40,7 +40,7 @@ pipeline {
 		stage('Docker Image'){
 			steps{
 				script{
-					docker.build('${DOCKER_HUB_REPO}:latest')
+					docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
