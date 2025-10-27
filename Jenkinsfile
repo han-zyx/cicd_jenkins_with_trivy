@@ -5,6 +5,7 @@ pipeline {
     }
 	environment {
 		SONAR_PROJECT_KEY = 'cicd_with_trivy'
+		DOCKER_HUB_REPO = 'hansakatennakoon/cicd_with_trivy'
 	}
     stages {
         stage('Github') {
@@ -36,5 +37,12 @@ pipeline {
                 }
             }
         }
+		stage('Docker Image'){
+			steps{
+				script{
+					docker.build('${DOCKER_HUB_REPO}:latest')
+				}
+			}
+		}
     }
 }
